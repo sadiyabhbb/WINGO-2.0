@@ -1,1 +1,21 @@
-
+services:
+  - type: worker
+    name: small-big-puppeteer-bot
+    env: node
+    buildCommand: npm install
+    startCommand: npm start
+    envVars:
+      - key: PUPPETEER_HEADLESS
+        value: "true"
+      - key: TELEGRAM_BOT_TOKEN
+        sync: false
+      - key: MARKET_BASE_URL
+        value: "https://dkwin9.com"
+      - key: MARKET_LOGIN_PATH
+        value: "/login"
+      - key: MARKET_GAME_PATH
+        value: "/game"
+      - key: MARKET_USERNAME
+        sync: false
+      - key: MARKET_PASSWORD
+        sync: false
