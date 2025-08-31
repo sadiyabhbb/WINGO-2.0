@@ -1,23 +1,14 @@
 {
-  "name": "small-big-puppeteer-bot",
+  "name": "win-go-bot",
   "version": "1.0.0",
-  "description": "Telegram bot that logs in via Puppeteer, scrapes live rounds, and predicts Small/Big.",
-  "main": "src/bot.js",
+  "description": "Telegram bot for scraping WinGo market and giving Small/Big signals",
+  "main": "bot.js",
   "scripts": {
-    "start": "node src/bot.js",
-    "dev": "nodemon src/bot.js"
-  },
-  "author": "",
-  "license": "MIT",
-  "engines": {
-    "node": ">=18.x"
+    "start": "node bot.js"
   },
   "dependencies": {
-    "dotenv": "^16.4.5",
+    "dotenv": "^16.3.1",
     "node-telegram-bot-api": "^0.61.0",
-    "puppeteer": "^22.11.1"
-  },
-  "devDependencies": {
-    "nodemon": "^3.1.7"
+    "puppeteer": "^22.0.0"
   }
 }
