@@ -2,7 +2,9 @@ require("dotenv").config();
 const TelegramBot = require("node-telegram-bot-api");
 const { scrapeGame } = require("./scraper");
 const { predict } = require("./predict");
+const http = require("http");
 
+// Telegram Bot
 const bot = new TelegramBot(process.env.TELEGRAM_BOT_TOKEN, { polling: true });
 
 bot.onText(/\/start/, (msg) => {
@@ -30,4 +32,14 @@ bot.onText(/\/signal/, async (msg) => {
     console.error(err);
     bot.sendMessage(chatId, "❌ Error fetching market data.");
   }
+});
+
+// Simple HTTP Server for Render health check
+const PORT = process.env.PORT || 3000;
+
+http.createServer((req, res) => {
+  res.writeHead(200, { "Content-Type": "text/plain" });
+  res.end("Bot is running 🚀\n");
+}).listen(PORT, () => {
+  console.log(`HTTP server running on port ${PORT}`);
 });
