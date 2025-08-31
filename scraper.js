@@ -7,9 +7,13 @@ async function scrapeGame() {
     // Puppeteer launch (Render compatible)
     browser = await puppeteer.launch({
       headless: true,
-      args: ["--no-sandbox", "--disable-setuid-sandbox"]
+      args: ["--no-sandbox", "--disable-setuid-sandbox", "--disable-dev-shm-usage"]
     });
+
     const page = await browser.newPage();
+
+    // Increase default timeout for slow servers
+    await page.setDefaultNavigationTimeout(60000);
 
     // Go to site
     await page.goto(process.env.GAME_URL, { waitUntil: "networkidle2" });
@@ -24,9 +28,9 @@ async function scrapeGame() {
 
     // Navigate to game page after login
     await page.goto(process.env.GAME_URL, { waitUntil: "networkidle2" });
-    
+
     // Wait for results selector
-    await page.waitForSelector(".result-class", { timeout: 10000 });
+    await page.waitForSelector(".result-class", { timeout: 15000 });
 
     // Scrape data
     const data = await page.evaluate(() => {
@@ -34,7 +38,6 @@ async function scrapeGame() {
       const results = Array.from(document.querySelectorAll(".result-class"))
         .map(el => el.innerText)
         .slice(0, 10);
-
       return { period, numbers: results };
     });
 
